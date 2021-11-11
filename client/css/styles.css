@@ -1,0 +1,60 @@
+body{
+    background-color: rgb(37, 46, 70);
+}
+
+td{
+    padding: 15px;
+}
+
+.game_table{
+  position: fixed;
+  background-color: rgb(60, 74, 112);
+  box-shadow: inset 0px 0px 10px 0px black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu{
+  position: fixed;
+  background-color: white;
+  box-shadow: 10px 10px 0px 0px rgb(102, 102, 102);
+  overflow-y: scroll;
+  width: 500px;
+  height: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu::-webkit-scrollbar{
+  display: none;
+}
+
+.buttons{
+  margin-top: 10px;
+}
+
+.buttons button{
+  width: 50%;
+  padding: 10px;
+}
+
+
+
+
+
+/* DIRECTION BUTTON STYLES */
+.directions{
+  margin: 0 auto;
+  width: 300px;
+}
+
+.upButton, .otherButtons{
+  text-align: center;
+}
+
+.upButton button, .otherButtons button{
+  padding: 10px;
+  margin-top: 5px;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake</title>
+
+  <link rel="stylesheet" href="css/chat.css">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+  <script>
+      const socket = io();
+  </script>
+</head>
+<body>
+
+  <%-include('./partials/chat')%>
+
+  <div class="menu" style="text-align: center;">
+    <div class="title" style="text-align: center;">
+      <h1>SNAKE <span style="color: coral;">RIVALS</span></h1>
+      <p>
+        ACTUAL GAME ID: <span id="game-info" style="color: rgb(40, 153, 45);">NONE</span>
+      </p>
+    </div>
+
+    <div>
+      <input type="text" placeholder="Username" onkeydown="registerName(event)">
+    </div>
+
+    <div class="buttons">
+      <button onclick="createGame()">CREAR PARTIDA</button>
+    </div>
+
+    <div>
+      <h2>GAME LIST:</h2>
+      <div class="game-list">
+      </div>
+    </div>
+  </div>
+
+  <div class="render">
+
+  </div>
+
+
+  <!-- GAME CLASSES -->
+  <script src="classes/online.class.js"></script>
+  <script src="classes/matrix.class.js"></script>
+  <script src="classes/snake.class.js"></script>
+  <script src="classes/interactivity.class.js"></script>
+  <script src="classes/game-render.class.js"></script>
+  <!-- END OF GAME CLASSES -->
+
+  <script src="js/index.js"></script>
+  <script src="js/session.js"></script>
+  <script>
+      function c(){
+          socket.emit("clearPlayers", "si");
+      }
+  </script>
+</body>
+</html>
