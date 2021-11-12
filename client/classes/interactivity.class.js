@@ -82,7 +82,10 @@ class GameInteractivity {
 
         directions.forEach(direction => {
             let button = document.createElement("button");
+
             button.onclick = () => this.assignDirection(direction);
+            button.innerText = direction;
+
             (direction === "up") ? divUp.append(button) : divOthers.append(button);
         })
         

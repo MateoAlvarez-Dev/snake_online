@@ -6,7 +6,7 @@ let isJoined = false;
 
 
 function startGame(data){
-    showGameInfo(data);
+    isJoined = true;
     
     document.querySelector(".menu").style.display = "none";
 
@@ -62,24 +62,18 @@ function createGame(){
 }
 
 
-function showGameInfo(text){
-    isJoined = true;
-    var messageContainer = document.getElementById("game-info");
-    messageContainer.innerText = text;
-}
-
-
 function addRoom(gameInfo){
     let div = document.createElement("div");
     let gameList = document.querySelector(".game-list");
     let template = `
-    <h3>GAME 1</h3>
+    <h3>GAME</h3>
     <p>
       PLAYERS: ${gameInfo.players.join("")}
     </p>
     <button onclick="joinGame('${gameInfo.roomKey}')">JOIN</button>`;
     
     div.innerHTML = template;
+    div.className = "game-div";
     gameList.append(div);
 }
 

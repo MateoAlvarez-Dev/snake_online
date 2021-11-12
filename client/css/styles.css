@@ -1,24 +1,52 @@
 body{
-    background-color: rgb(37, 46, 70);
+    background-image: url(../media/wallp.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 td{
     padding: 15px;
 }
 
+input{
+  background-color: rgba(255, 255, 255, 0.699);
+  backdrop-filter: blur(2px);
+  border-radius: 50px 10px 50px 10px;
+  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.473);
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+}
+
+button{
+  width: 50%;
+  padding: 15px;
+  border: none;
+  background-color: rgb(221, 221, 221);
+}
+
 .game_table{
   position: fixed;
-  background-color: rgb(60, 74, 112);
-  box-shadow: inset 0px 0px 10px 0px black;
+
+  background-color: rgba(255, 255, 255, 0.39);
+  backdrop-filter: blur(2px);
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0px rgba(255, 255, 255, 0.295), -5px -5px 10px 0px rgba(255, 255, 255, 0.527);
+
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .menu{
+  padding: 10px;
   position: fixed;
-  background-color: white;
-  box-shadow: 10px 10px 0px 0px rgb(102, 102, 102);
+  background-color: rgba(255, 255, 255, 0.39);
+  backdrop-filter: blur(2px);
+  border-radius: 50px 10px 50px 10px;
+  box-shadow: 5px 5px 10px 0px rgba(255, 255, 255, 0.295), -5px -5px 10px 0px rgba(255, 255, 255, 0.527);
   overflow-y: scroll;
   width: 500px;
   height: 600px;
@@ -35,12 +63,13 @@ td{
   margin-top: 10px;
 }
 
-.buttons button{
-  width: 50%;
+.game-div{
   padding: 10px;
+  background-color: rgba(255, 255, 255, 0.493);
+  backdrop-filter: blur(2px);
+  border-radius: 50px 10px 50px 10px;
+  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.473);
 }
-
-
 
 
 
@@ -55,6 +84,7 @@ td{
 }
 
 .upButton button, .otherButtons button{
+  width: auto;
   padding: 10px;
   margin-top: 5px;
 }
