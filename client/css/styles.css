@@ -1,3 +1,7 @@
+*{
+  transition: 0.7s;
+}
+
 body{
     background-image: url(../media/wallp.jpg);
     background-attachment: fixed;
@@ -10,21 +14,40 @@ td{
 }
 
 input{
-  background-color: rgba(255, 255, 255, 0.699);
+  background-color: black;
+  color: white;
   backdrop-filter: blur(2px);
   border-radius: 50px 10px 50px 10px;
-  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.473);
   margin: 10px;
   padding: 10px;
   border: none;
   border-radius: 10px;
 }
 
+input:focus{
+  background-color: rgb(65, 65, 65);
+}
+
+input[disabled]{
+  background-color: rgb(60, 212, 40);
+  box-shadow: 0px 0px 10px 5px rgba(51, 255, 0, 0.473);
+}
+
 button{
   width: 50%;
-  padding: 15px;
+  padding: 10px;
   border: none;
-  background-color: rgb(221, 221, 221);
+  border-radius: 10px 0px 10px 0px;
+  color: white;
+  background: rgb(255,177,110);
+  background: -moz-linear-gradient(90deg, rgba(255,177,110,1) 0%, rgba(255,6,0,1) 100%);
+  background: -webkit-linear-gradient(90deg, rgba(255,177,110,1) 0%, rgba(255,6,0,1) 100%);
+  background: linear-gradient(90deg, rgba(255,177,110,1) 0%, rgba(255,6,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffb16e",endColorstr="#ff0600",GradientType=1);
+}
+
+button[disabled]{
+  box-shadow: 0px 0px 10px 5px rgba(255, 187, 1, 0.473);
 }
 
 .game_table{
@@ -40,13 +63,22 @@ button{
   transform: translate(-50%, -50%);
 }
 
+.user-menu{
+  padding: 10px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.295);
+}
+
+.user-menu:hover{
+  transition: 0.5s;
+  transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.295);
+}
+
 .menu{
   padding: 10px;
   position: fixed;
-  background-color: rgba(255, 255, 255, 0.39);
+  background-color: rgb(255, 255, 255);
   backdrop-filter: blur(2px);
-  border-radius: 50px 10px 50px 10px;
-  box-shadow: 5px 5px 10px 0px rgba(255, 255, 255, 0.295), -5px -5px 10px 0px rgba(255, 255, 255, 0.527);
   overflow-y: scroll;
   width: 500px;
   height: 600px;
@@ -65,18 +97,51 @@ button{
 
 .game-div{
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.493);
+  background-color: rgb(218, 218, 218);
   backdrop-filter: blur(2px);
   border-radius: 50px 10px 50px 10px;
-  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.473);
+  box-shadow: 0px 0px 10px 5px rgba(230, 230, 230, 0.473);
+}
+
+
+/* SIZE SELECTOR STYLES */
+
+#size-selector{
+  padding: 10px;
+  border: none;
+}
+
+
+/* COUNT DIV STYLES */
+
+.count{
+  position: fixed;
+  padding: 10px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.count h1{
+  font-size: 130px;
 }
 
 
 
 /* DIRECTION BUTTON STYLES */
+
 .directions{
+  position: fixed;
   margin: 0 auto;
   width: 300px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .upButton, .otherButtons{
@@ -85,6 +150,6 @@ button{
 
 .upButton button, .otherButtons button{
   width: auto;
-  padding: 10px;
+  padding: 20px;
   margin-top: 5px;
 }

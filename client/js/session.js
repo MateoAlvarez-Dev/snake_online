@@ -5,12 +5,49 @@ let isJoined = false;
 })();
 
 
-function startGame(data){
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true
+})
+
+
+function startGame(){
+    let count = 3;
+    let countDiv = document.querySelector("#n-count");
+
     isJoined = true;
     
     document.querySelector(".menu").style.display = "none";
+    countDiv.style.display = "initial";
+    
+    let interval = setInterval(() => {
+        countDiv.innerText = count;
+        if(count === 0){
+            let actualGame = new GameCreator(document.querySelector(".render"), socket);
+            actualGame.start();
+            actualGame.onPlayerLeave(() => createAlert("error", "The Player Lost and Leave the Game :("));
+            clearInterval(interval);
+        }
+        count--;
+    }, 1000)
+}
 
-    new GameCreator(document.querySelector(".render"), socket).start();
+
+function createAlert(icon, title){
+    Toast.fire({
+        icon: icon,
+        title: title
+    })
+}
+
+
+function onRegisterName(username){
+    window.username = username;
+    document.querySelector("#usrname").setAttribute("disabled", "true");
+    createAlert('success', 'You now have a username! :D');
 }
 
 
@@ -18,10 +55,9 @@ function registerName(e){
     if(e.which === 13){
         let inputValue = e.target.value;
         if(inputValue && inputValue.length > 4){
-            window.username = inputValue;
-            e.target.setAttribute("disabled", "true");
+            socket.emit("create-user", inputValue);
         }else{
-            alert("El nombre debe tener mas de 4 caracteres");
+            createAlert('error', 'The username need to have at least 4 characters');
         }
     }
 }
@@ -31,7 +67,7 @@ function Login(done){
     if(window.username)
         return done(username);
     else
-        alert("No hay nombre de usuario");
+        createAlert('error', 'You dont have a username! :O');
 }
 
 
@@ -53,6 +89,7 @@ function createGame(){
         if(!isJoined){
             socket.emit("create-room", myName);
             document.querySelectorAll("button").forEach(el => el.setAttribute("disabled", "true"));
+            createAlert('success', 'Game Created! :)');
         }else{
             if(confirm("Tienes que salir de la sesion actual para poder entrar a otra, Salir?")){
                 window.location.reload();
@@ -92,6 +129,8 @@ function refreshList(rooms){
     addMultipleRooms(rooms);
 }
 
+
+socket.on("create-user", onRegisterName);
 
 socket.on("page-loaded", addMultipleRooms);
 

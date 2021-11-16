@@ -1,13 +1,29 @@
 module.exports = {
     rooms: {},
+    users: [],
 
-    // USABLES
-    create: function (roomID, username) {
+
+    // USERS - METHODS
+    createUser(username){
+        this.users.push(username);
+    },
+
+    userLeave(username){
+        this.users = this.users.filter(el => el !== username);
+    },
+
+    canCreateUser(username){
+        return !this.users.includes(username);
+    },
+
+
+    // ROOMS - METHODS
+    create(roomID, username) {
         this.rooms[roomID] = [username];
         return true;
     },
 
-    join: function (roomID, username) {
+    join(roomID, username) {
         if(this.canJoin(roomID, username)){
             this.rooms[roomID].push(username);
             return true;
@@ -15,26 +31,26 @@ module.exports = {
         return false;
     },
 
-    leave: function (roomID, username) {
+    leave(roomID, username) {
         this.rooms[roomID] = this.rooms[roomID].filter(user => user !== username);
         this.deleteRoom(roomID);
     },
 
     // UTILS
-    canJoin: function (roomID, username) {
+    canJoin(roomID, username) {
         if(this.rooms[roomID] && !this.rooms[roomID].includes(username) && this.rooms[roomID].length < 2){
             return true;
         }
         return false;
     },
 
-    deleteRoom: function (roomID) {
+    deleteRoom(roomID) {
         if(this.rooms[roomID].length === 0){
             delete this.rooms[roomID];
         }
     },
     
-    getRoom: function (roomID) {
+    getRoom(roomID) {
         return this.rooms[roomID];
     }
 }

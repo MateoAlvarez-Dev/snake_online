@@ -3,7 +3,9 @@ function openSocketConnection(io){
 
         let socketController = require('./socket.controller')(socket, io);
 
-        socket.on("create-room", socketController.createRoom)
+        socket.on("create-user", socketController.createUser);
+
+        socket.on("create-room", socketController.createRoom);
 
         socket.on("page-loaded", socketController.pageLoaded);
     

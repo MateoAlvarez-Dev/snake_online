@@ -4,6 +4,12 @@ module.exports = (socket, io) => {
     const roomStorage = require('./../Storage/room.storage');
 
     return {
+        createUser(username){
+            if(roomStorage.canCreateUser(username)){
+                roomStorage.createUser(username);
+                socket.emit("create-user", username);
+            }
+        },
         createRoom(username){
             var roomKey = newID();
             if(roomStorage.create(roomKey, username)){
@@ -29,9 +35,14 @@ module.exports = (socket, io) => {
         },
         disconnect(){
             if(socket.gameInfo){
+
+                socket.to(socket.gameInfo.roomKey).emit("disconnected");
+
                 roomStorage.leave(socket.gameInfo.roomKey, socket.gameInfo.username);
+                roomStorage.userLeave(socket.gameInfo.username);
+
                 io.emit("refresh-list", roomStorage.rooms);
-                console.log(roomStorage.rooms);
+
             }
         }
     };

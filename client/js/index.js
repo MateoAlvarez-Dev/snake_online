@@ -3,6 +3,7 @@ class GameCreator {
         this.direction = "down";
         this.matrix = new Matrix(15).matrix;
         this.snake = new Snake(this.matrix);
+        this.socket = socket;
         this.gameDisplay = new GameRender({
             arr: this.matrix,
             snake: this.snake,
@@ -13,15 +14,14 @@ class GameCreator {
     }
 
     start() {
-        if(this.gameDisplay.snakeObject.isAlive){
-            this.gameDisplay.changeDirection();
-            this.gameDisplay.createButtons();
-            this.gameDisplay.render();
-            this.startUpdate();
-        }else{
-            this.clearUpdate();
-            alert("Perdiste");
-        }
+        this.gameDisplay.changeDirection();
+        this.gameDisplay.createButtons();
+        this.gameDisplay.render();
+        this.startUpdate();
+    }
+
+    onPlayerLeave(cback){
+        this.socket.on('disconnected', cback);
     }
 
     startUpdate() {
@@ -30,7 +30,6 @@ class GameCreator {
                 this.gameDisplay.update(this.direction);
             }else{
                 this.clearUpdate();
-                alert("Perdiste, saliendo");
                 setTimeout(() => {
                     window.location.reload();
                 }, 3000)

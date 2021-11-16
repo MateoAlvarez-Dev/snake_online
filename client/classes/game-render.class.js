@@ -32,8 +32,11 @@ class GameRender extends GameInteractivity{
             for (let x = 0; x < this.gameMap.length; x++) {
                 let td = document.createElement("td");
 
-                (this.gameMap[i][x] != undefined && this.gameMap[i][x].type === "worm-body") ? td.style.background = "red" : "";
-                (this.gameMap[i][x] != undefined && this.gameMap[i][x].type === "fruit") ? td.style.background = "blue" : "";
+                if(this.gameMap[i][x] != undefined && this.gameMap[i][x].type === "worm-body")
+                    td.style.background = "red";
+
+                if(this.gameMap[i][x] != undefined && this.gameMap[i][x].type === "fruit")
+                    td.style.background = "blue", td.style.borderRadius = "50%";
 
                 td.id = `${x}_${i}`;
                 tr.append(td);
