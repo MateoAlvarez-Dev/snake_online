@@ -6,6 +6,7 @@ class GameRender extends GameInteractivity{
 
         this.multiplayer = new onlineClass(snake, socket);
         this.multiplayer.onSecondSnake((snake) => this.secondSnake = snake);
+        this.createMap();
     }
 
     // CUADRAR EN ESTA FUNCIÓN TODO LO NECESARIO PARA INICIAR LA OTRA SERPIENTE
@@ -13,17 +14,8 @@ class GameRender extends GameInteractivity{
         this.secondSnake.forEach(el => this.gameMap[el.y][el.x] = el);
     }
 
-    addElementsToTheMap(){
-        let fruit = this.fruit;
-        this.snakeObject.snakeBody.forEach(el => this.gameMap[el.y][el.x] = el);
-        this.secondSnake.forEach(el => this.gameMap[el.y][el.x] = el);
-        this.gameMap[fruit.y][fruit.x] = fruit;
-    }
-    
-    render() {
+    createMap(){
         let table = document.createElement("table");
-
-        this.addElementsToTheMap();
         table.className = "game_table";
 
         for (let i = 0; i < this.gameMap.length; i++) {
@@ -31,13 +23,6 @@ class GameRender extends GameInteractivity{
             let tr = document.createElement("tr");
             for (let x = 0; x < this.gameMap.length; x++) {
                 let td = document.createElement("td");
-
-                if(this.gameMap[i][x] != undefined && this.gameMap[i][x].type === "worm-body")
-                    td.style.background = "red";
-
-                if(this.gameMap[i][x] != undefined && this.gameMap[i][x].type === "fruit")
-                    td.style.background = "blue", td.style.borderRadius = "50%";
-
                 td.id = `${x}_${i}`;
                 tr.append(td);
             }
@@ -45,11 +30,30 @@ class GameRender extends GameInteractivity{
 
         }
 
-        if (this.renderContainer) {
-            this.renderContainer.innerHTML = "";
-        }
-
         this.renderContainer.append(table);
+    }
+    
+    render() {
+
+        document.querySelectorAll("td").forEach(el => el.style.background = "none");
+
+        this.snakeObject.snakeBody.forEach(el => {
+            let x = el.x;
+            let y = el.y;
+            this.gameMap[y][x] = el;
+            document.getElementById(`${x}_${y}`).style.background = "red";
+        });
+
+        this.secondSnake.forEach(el => {
+            let x = el.x;
+            let y = el.y;
+            this.gameMap[y][x] = el;
+            document.getElementById(`${x}_${y}`).style.background = "orange";
+        });
+
+        this.gameMap[this.fruit.y][this.fruit.x] = this.fruit;
+        document.getElementById(`${this.fruit.x}_${this.fruit.y}`).style.background = "blue";
+
     }
 
     update() {

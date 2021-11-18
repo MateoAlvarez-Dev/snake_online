@@ -6,15 +6,19 @@ module.exports = (socket, io) => {
     return {
         createUser(username){
             if(roomStorage.canCreateUser(username)){
+                socket.userObject = { username };
+
                 roomStorage.createUser(username);
                 socket.emit("create-user", username);
             }
         },
         createRoom(username){
             var roomKey = newID();
-            if(roomStorage.create(roomKey, username)){
+            if(socket.userObject && roomStorage.create(roomKey, username)){
                 socket.join(roomKey);
                 socket.gameInfo = { roomKey, username };
+
+                socket.emit("room-created", true);
                 socket.broadcast.emit("create-room", { roomKey, players: roomStorage.getRoom(roomKey) });
             }
         },
@@ -22,7 +26,7 @@ module.exports = (socket, io) => {
             socket.emit("page-loaded", roomStorage.rooms)
         },
         joinRoom({ roomKey, username }){
-            if(roomStorage.join(roomKey, username)){
+            if(socket.userObject && roomStorage.join(roomKey, username)){
         
                 socket.join(roomKey);
                 socket.gameInfo = { roomKey, username };

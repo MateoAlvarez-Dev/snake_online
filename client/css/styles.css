@@ -3,14 +3,15 @@
 }
 
 body{
-    background-image: url(../media/wallp.jpg);
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
+  background-image: url(../media/wallp.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 td{
-    padding: 15px;
+  transition: none;
+  padding: 15px;
 }
 
 input{
@@ -53,7 +54,7 @@ button[disabled]{
 .game_table{
   position: fixed;
 
-  background-color: rgba(255, 255, 255, 0.39);
+  background-color: rgba(255, 255, 255, 0.678);
   backdrop-filter: blur(2px);
   border-radius: 10px;
   box-shadow: 5px 5px 10px 0px rgba(255, 255, 255, 0.295), -5px -5px 10px 0px rgba(255, 255, 255, 0.527);
@@ -152,4 +153,15 @@ button[disabled]{
   width: auto;
   padding: 20px;
   margin-top: 5px;
+}
+
+
+@media screen and (max-width: 900px){
+  .menu{
+    width: 100%;
+    height: 100%;
+  }
+  td{
+    padding: 13px;
+  }
 }

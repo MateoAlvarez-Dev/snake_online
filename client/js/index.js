@@ -1,6 +1,5 @@
 class GameCreator {
     constructor(renderContainer, socket) {
-        this.direction = "down";
         this.matrix = new Matrix(15).matrix;
         this.snake = new Snake(this.matrix);
         this.socket = socket;
@@ -13,22 +12,23 @@ class GameCreator {
         });
     }
 
-    start() {
+    start(onPlayerDie) {
         this.gameDisplay.changeDirection();
         this.gameDisplay.createButtons();
         this.gameDisplay.render();
-        this.startUpdate();
+        this.startUpdate(onPlayerDie);
     }
 
     onPlayerLeave(cback){
         this.socket.on('disconnected', cback);
     }
 
-    startUpdate() {
+    startUpdate(onPlayerDie) {
         this.interval = setInterval(() => {
             if(this.gameDisplay.snakeObject.isAlive){
-                this.gameDisplay.update(this.direction);
+                this.gameDisplay.update();
             }else{
+                onPlayerDie();
                 this.clearUpdate();
                 setTimeout(() => {
                     window.location.reload();

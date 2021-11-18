@@ -78,7 +78,7 @@ class GameInteractivity {
         let divUp = document.createElement("div");
         let divOthers = document.createElement("div");
 
-        let directions = ["up", "left", "right", "down"];
+        let directions = ["up", "left", "down", "right"];
 
         directions.forEach(direction => {
             let button = document.createElement("button");

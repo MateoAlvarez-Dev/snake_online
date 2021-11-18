@@ -1,0 +1,34 @@
+<div class="menu" style="text-align: center;">
+    <div class="title" style="text-align: center;">
+      <h1>SNAKE <span style="color: coral;">RIVALS</span></h1>
+      <p>
+        Created By Mateo Alvarez
+      </p>
+    </div>
+
+    <div class="user-menu">
+
+      <div>
+        <label for="">Your Username:</label>
+        <input type="text" maxlength="10" id="usrname" placeholder="Username" onkeydown="registerName(event)">
+        <p style="color: gray;">
+          To set the username press ENTER key
+        </p>
+      </div>
+      <div>
+        <select name="" id="size-selector" onchange="console.log(event.target.value)">
+          <option value="15">GAME SIZE</option>
+          <option value="30">30x30</option>
+          <option value="50">50x50</option>
+        </select>
+        <button onclick="createGame()">CREATE GAME</button>
+      </div>
+
+    </div>
+
+    <div>
+      <h2>GAME LIST:</h2>
+      <div class="game-list">
+      </div>
+    </div>
+  </div>

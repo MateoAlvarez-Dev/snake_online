@@ -14,6 +14,20 @@ const Toast = Swal.mixin({
 })
 
 
+function startAlertAudio(){
+    let audio = document.getElementById("alert-audio");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+
+function startInGameMusic(){
+    let audio = document.getElementById("in-game-audio");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+
 function startGame(){
     let count = 3;
     let countDiv = document.querySelector("#n-count");
@@ -27,8 +41,11 @@ function startGame(){
         countDiv.innerText = count;
         if(count === 0){
             let actualGame = new GameCreator(document.querySelector(".render"), socket);
-            actualGame.start();
+
+            actualGame.start(() => Swal.fire('YOU DIE!', 'Omg you died, bye bye!', 'error') /* PLAYER DIES CALLBACK */);
             actualGame.onPlayerLeave(() => createAlert("error", "The Player Lost and Leave the Game :("));
+
+            startInGameMusic();
             clearInterval(interval);
         }
         count--;
@@ -40,7 +57,20 @@ function createAlert(icon, title){
     Toast.fire({
         icon: icon,
         title: title
-    })
+    });
+    startAlertAudio();
+}
+
+
+function registerName(e){
+    if(e.which === 13){
+        let inputValue = e.target.value.replace(/[^a-zA-Z0-9 ]/g, "").replace(/[ ]+/g, "");
+        if(inputValue && inputValue.length > 4){
+            socket.emit("create-user", inputValue);
+        }else{
+            createAlert('error', 'The username need to have at least 4 characters');
+        }
+    }
 }
 
 
@@ -48,18 +78,6 @@ function onRegisterName(username){
     window.username = username;
     document.querySelector("#usrname").setAttribute("disabled", "true");
     createAlert('success', 'You now have a username! :D');
-}
-
-
-function registerName(e){
-    if(e.which === 13){
-        let inputValue = e.target.value;
-        if(inputValue && inputValue.length > 4){
-            socket.emit("create-user", inputValue);
-        }else{
-            createAlert('error', 'The username need to have at least 4 characters');
-        }
-    }
 }
 
 
@@ -88,14 +106,18 @@ function createGame(){
     Login((myName) => {
         if(!isJoined){
             socket.emit("create-room", myName);
-            document.querySelectorAll("button").forEach(el => el.setAttribute("disabled", "true"));
-            createAlert('success', 'Game Created! :)');
         }else{
             if(confirm("Tienes que salir de la sesion actual para poder entrar a otra, Salir?")){
                 window.location.reload();
             }
         }
     });
+}
+
+
+function onCreateGame(){
+    document.querySelectorAll("button").forEach(el => el.setAttribute("disabled", "true"));
+    createAlert('success', 'Game Created! :)');
 }
 
 
@@ -128,14 +150,3 @@ function refreshList(rooms){
     gameList.innerHTML = "";
     addMultipleRooms(rooms);
 }
-
-
-socket.on("create-user", onRegisterName);
-
-socket.on("page-loaded", addMultipleRooms);
-
-socket.on("refresh-list", refreshList);
-
-socket.on("create-room", addRoom);
-
-socket.on("joined", startGame);
